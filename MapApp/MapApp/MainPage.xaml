@@ -9,53 +9,10 @@
 
     <StackLayout>
 
-        <Button Text="Get GPS"
-                Clicked="GetGPSBtn_Clicked"/>
-        <Label x:Name="LongiText"
-               FontSize="20"/>
-        <Label x:Name="LagiText"
-               FontSize="20"/>
-        <Label x:Name="isOpenGPS"
-               FontSize="20"/>
-
-
-        
-        <maps:Map x:Name="MyMap"
-                  HasZoomEnabled="false"
-                 ZoomButton
-                 MoveToLastRegionOnLayoutChange="False">
-            
-            <x:Arguments>
-                <maps:MapSpan>
-                    <x:Arguments>
-                        <maps:Position>
-                            <x:Arguments>
-                                <x:Double>36.9628066</x:Double>
-                                <x:Double>-122.0194722</x:Double>
-                            </x:Arguments>
-                        </maps:Position>
-                        <x:Double>0.01</x:Double>
-                        <x:Double>0.01</x:Double>
-                    </x:Arguments>
-                </maps:MapSpan>
-            </x:Arguments>
-
-            <maps:Map.Pins>
-                <maps:Pin Label="Santa Cruz"
-                       Address="The city with a boardwalk"
-                       Type="Place">
-                    <maps:Pin.Position>
-                        <maps:Position>
-                            <x:Arguments>
-                                <x:Double x:Name="longPosition">36.9628066</x:Double>
-                                <x:Double x:Name="latiPosition">-122.0194722</x:Double>
-                            </x:Arguments>
-                        </maps:Position>
-                    </maps:Pin.Position>
-                </maps:Pin>
-            </maps:Map.Pins>
-        </maps:Map>
-
+        <Button Text="Map"
+                BackgroundColor="Red"
+                TextColor="White"
+                Clicked="OpenMap_clicked"/>
     </StackLayout>
 
 </ContentPage>

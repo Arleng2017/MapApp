@@ -1,4 +1,5 @@
-﻿using Plugin.Geolocator;
+﻿using MapApp.View;
+using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,33 +24,39 @@ namespace MapApp
 
         }
 
+        public async void OpenMap_clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new GPSConfigurePage());
+        }
+
         private async void GetGPSBtn_Clicked(object sender, EventArgs e)
         {
 
+            //try
+            //{
 
-            try
-            {
+            //    var locator = CrossGeolocator.Current;
+            //    var x = CrossGeolocator.Current.IsGeolocationEnabled;
+            //    locator.DesiredAccuracy = 50;
+            //    var position = await locator.GetPositionAsync();
 
-                var locator = CrossGeolocator.Current;
-                locator.DesiredAccuracy = 50;
-                var position = await locator.GetPositionAsync();
+            //    //LongiText.Text = position.Latitude.ToString();
+            //    //LagiText.Text = position.Longitude.ToString();
+            //    //isOpenGPS.Text = x;
+            //    longPosition = position.Longitude;
+            //    latiPosition = position.Latitude;
 
-                LongiText.Text = position.Latitude.ToString();
-                LagiText.Text = position.Longitude.ToString();
-                longPosition = position.Longitude;
-                latiPosition = position.Latitude;
+            //    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(100)));
 
-                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(100)));
-
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
+            //}
 
 
         }
 
-       
+
     }
 }
