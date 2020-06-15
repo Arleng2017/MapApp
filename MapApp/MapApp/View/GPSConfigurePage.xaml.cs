@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,19 +24,25 @@ namespace MapApp.View
 
         async void CheckGPSStatus()
         {
+
             try
             {
-                var locator = CrossGeolocator.Current;
-                var x = CrossGeolocator.Current.IsGeolocationEnabled;
-                if (CrossGeolocator.Current.IsGeolocationEnabled)
+                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (status == PermissionStatus.Granted)
                 {
+
                     Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
                     await Navigation.PushModalAsync(new MapPage(), false);
                 }
                 else
                 {
-                    await DisplayAlert("Notification", "Please turn on GPS", "OK");
-                    Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
+                    var isOpenGps = await DisplayAlert("ผิดพลาด GPS ถูกปิดใช้งาน", "ต้องการเปิด GPS หรือไม่?", "Yes", "No");
+                    if (isOpenGps)
+                    {
+                        status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                        CheckGPSStatus();
+                    }
+                    else await Navigation.PopAsync();
                 }
             }
             catch (Exception ex)

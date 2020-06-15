@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.Maps;
+using Xamarin.Essentials;
+
 namespace MapApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -16,6 +18,7 @@ namespace MapApp.View
         public MapPage()
         {
             InitializeComponent();
+            GetLocation();
 
         }
 
@@ -23,20 +26,12 @@ namespace MapApp.View
         {
             try
             {
-
-                var locator = CrossGeolocator.Current;
-                var x = CrossGeolocator.Current.IsGeolocationEnabled;
-                locator.DesiredAccuracy = 50;
-                var position = await locator.GetPositionAsync();
-
-                //LongiText.Text = position.Latitude.ToString();
-                //LagiText.Text = position.Longitude.ToString();
-                //isOpenGPS.Text = x;
-                longPosition = position.Longitude;
-                latiPosition = position.Latitude;
-
-                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(100)));
-
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                var location = await Geolocation.GetLocationAsync(request);
+                if (location != null)
+                {
+                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(100)));
+                }
             }
             catch (Exception ex)
             {
