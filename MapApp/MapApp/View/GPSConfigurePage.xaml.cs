@@ -18,37 +18,54 @@ namespace MapApp.View
         public GPSConfigurePage()
         {
             InitializeComponent();
-            CheckGPSStatus();
+           // CheckGPSStatus();
         }
 
+        async void ShowPermissionAlert(object sender,EventArgs e)
+        {
+            await Permissions.RequestAsync<Permissions.LocationAlways>();
+           
 
+        }
         async void CheckGPSStatus()
         {
-
-            try
+            var checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+            var checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (checkapp == PermissionStatus.Granted && checkdevice)
             {
-                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                if (status == PermissionStatus.Granted)
+                await Navigation.PushAsync(new MapPage());
+            }
+            else
+            {
+                var alertAns = await DisplayAlert("GPS ไม่สามารถใช้งานได้ ลองใหม่อีกครั้ง", "คุณต้องการเปิด GPS หรือไม่ ", "Yes", "No");
+                if (alertAns)
                 {
-
-                    Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
-                    await Navigation.PushModalAsync(new MapPage(), false);
+                    OpenSetting();
                 }
                 else
                 {
-                    var isOpenGps = await DisplayAlert("ผิดพลาด GPS ถูกปิดใช้งาน", "ต้องการเปิด GPS หรือไม่?", "Yes", "No");
-                    if (isOpenGps)
-                    {
-                        status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                        CheckGPSStatus();
-                    }
-                    else await Navigation.PopAsync();
+                    await Navigation.PopAsync();
                 }
+
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
+
         }
+
+        async void OpenSetting()
+        {
+            var checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+            var permission = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            await Permissions.RequestAsync<Permissions.LocationAlways>();
+            //if (checkdevice == false || permission != PermissionStatus.Granted)
+            //{
+            //    if (!checkdevice)
+            //    {
+            //        DependencyService.Get<IGetGPS>().GetGPS();
+            //    }
+            //    await Permissions.RequestAsync<Permissions.LocationAlways>();
+            //}
+        }
+
+
     }
 }

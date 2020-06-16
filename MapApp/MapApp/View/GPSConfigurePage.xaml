@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              x:Class="MapApp.View.GPSConfigurePage">
   <ContentPage.Content>
-      <StackLayout></StackLayout>
+      <StackLayout>
+            <Label x:Name="gpsText" />
+            <Button Clicked="ShowPermissionAlert" Text="Show Permission"/>
+        </StackLayout>
   </ContentPage.Content>
 </ContentPage>

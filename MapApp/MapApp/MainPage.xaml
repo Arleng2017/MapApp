@@ -7,13 +7,14 @@
              x:Class="MapApp.MainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
 
-    <StackLayout>
+    <ContentPage.Content>
+        <StackLayout>
 
-        <Button Text="Map"
+            <Button Text="Map"
                 BackgroundColor="Red"
                 TextColor="White"
-                VerticalOptions="center"
                 Clicked="OpenMap_clicked"/>
-    </StackLayout>
 
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
