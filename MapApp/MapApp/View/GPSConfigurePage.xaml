@@ -5,10 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MapApp.View.GPSConfigurePage">
-  <ContentPage.Content>
-      <StackLayout>
-            <Label x:Name="gpsText" />
-            <Button Clicked="ShowPermissionAlert" Text="Show Permission"/>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="gpsText"                  
+                   FontSize="50"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Button Text="เปิด GPS" 
+                    TextColor="white"
+                    BackgroundColor="Red" 
+                    Clicked="OpenSetting" />
+
         </StackLayout>
-  </ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

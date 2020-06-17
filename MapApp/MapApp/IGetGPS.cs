@@ -8,5 +8,6 @@ namespace MapApp
     {
         void GetGPS();
         bool CheckStatus();
+        void OpenApplicationSetting();
     }
 }

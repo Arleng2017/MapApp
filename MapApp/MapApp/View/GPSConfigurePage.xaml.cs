@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MapApp.View
@@ -18,52 +17,95 @@ namespace MapApp.View
         public GPSConfigurePage()
         {
             InitializeComponent();
-           // CheckGPSStatus();
         }
 
-        async void ShowPermissionAlert(object sender,EventArgs e)
+        protected async override void OnAppearing()
         {
-            await Permissions.RequestAsync<Permissions.LocationAlways>();
-           
-
-        }
-        async void CheckGPSStatus()
-        {
+            base.OnAppearing();
             var checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
             var checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (checkapp == PermissionStatus.Granted && checkdevice)
             {
-                await Navigation.PushAsync(new MapPage());
+                Navigation.PushAsync(new MapPage());
             }
             else
             {
-                var alertAns = await DisplayAlert("GPS ไม่สามารถใช้งานได้ ลองใหม่อีกครั้ง", "คุณต้องการเปิด GPS หรือไม่ ", "Yes", "No");
-                if (alertAns)
-                {
-                    OpenSetting();
-                }
-                else
-                {
-                    await Navigation.PopAsync();
-                }
-
+                gpsText.Text = "GPS ถูกปิดอยู่";
             }
-
         }
 
-        async void OpenSetting()
+        //async void check()
+        //{
+        //    var checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+        //    var checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        //    if (checkapp != PermissionStatus.Granted)
+        //    {
+        //        checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+        //        //  checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        //        if (checkapp == PermissionStatus.Granted && checkdevice)
+        //        {
+        //            await Navigation.PushAsync(new MapPage());
+        //        }
+        //        if (checkapp != PermissionStatus.Granted)
+        //        {
+        //            await Navigation.PopAsync();
+        //            DependencyService.Get<IGetGPS>().OpenApplicationSetting();
+
+
+        //        }
+        //    }
+        //    else
+        //    {
+        //        checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+        //        checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+        //        if (checkdevice == false || checkapp != PermissionStatus.Granted)
+        //        {
+        //            if (!checkdevice)
+        //            {
+        //                await Navigation.PopAsync();
+        //                DependencyService.Get<IGetGPS>().GetGPS();
+        //            }
+        //        }
+        //    }
+
+        //}
+
+        async void OpenSetting(Object sender, EventArgs e)
         {
+
             var checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
-            var permission = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            await Permissions.RequestAsync<Permissions.LocationAlways>();
-            //if (checkdevice == false || permission != PermissionStatus.Granted)
-            //{
-            //    if (!checkdevice)
-            //    {
-            //        DependencyService.Get<IGetGPS>().GetGPS();
-            //    }
-            //    await Permissions.RequestAsync<Permissions.LocationAlways>();
-            //}
+            var checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (checkapp != PermissionStatus.Granted)
+            {
+                checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+                if (checkapp == PermissionStatus.Granted && checkdevice)
+                {
+                    await Navigation.PushAsync(new MapPage());
+                }
+                if (checkapp == PermissionStatus.Denied && checkdevice)
+                {
+                   DependencyService.Get<IGetGPS>().OpenApplicationSetting();
+                }
+
+                if (checkapp == PermissionStatus.Denied && !checkdevice)
+                {
+                    DependencyService.Get<IGetGPS>().GetGPS();
+                
+                }
+            }
+            else
+            {
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                checkdevice = DependencyService.Get<IGetGPS>().CheckStatus();
+                checkapp = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (checkdevice == false || checkapp != PermissionStatus.Granted)
+                {
+                    if (!checkdevice)
+                    {
+                        DependencyService.Get<IGetGPS>().GetGPS();
+                    }
+                }
+            }
         }
 
 
