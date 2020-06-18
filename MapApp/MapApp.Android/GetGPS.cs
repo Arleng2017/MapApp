@@ -21,15 +21,10 @@ namespace MapApp.Droid
         LocationManager LM = (LocationManager)Android.App.Application.Context.GetSystemService(Context.LocationService);
         void IGetGPS.GetGPS()
         {
-            //if (LM.IsProviderEnabled(LocationManager.GpsProvider) == false)
-            //{
             Intent intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
             intent.AddFlags(ActivityFlags.NewTask);
             intent.AddFlags(ActivityFlags.MultipleTask);
             Android.App.Application.Context.StartActivity(intent);
-            //}
-
-
         }
 
 
@@ -37,14 +32,10 @@ namespace MapApp.Droid
 
         public void OpenApplicationSetting()
         {
-            // Intent intent = new Intent(Android.Provider.Settings.ActionApplicationSettings);
-            //Device.BeginInvokeOnMainThread(() =>
-            //{
-                Intent intent = new Intent(Android.Provider.Settings.ActionApplicationSettings);
-                intent.AddFlags(ActivityFlags.NewTask);
-                intent.AddFlags(ActivityFlags.MultipleTask);
-                Android.App.Application.Context.StartActivity(intent);
-            //});
+            Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
+            intent.AddFlags(ActivityFlags.NewTask);
+            intent.AddFlags(ActivityFlags.MultipleTask);
+            Android.App.Application.Context.StartActivity(intent);
         }
     }
 

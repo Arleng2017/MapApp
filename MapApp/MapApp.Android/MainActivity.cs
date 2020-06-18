@@ -14,6 +14,7 @@ using System.Linq;
 using Android;
 using System.Threading.Tasks;
 using Android.Util;
+using Android.Content;
 
 namespace MapApp.Droid
 {
@@ -35,11 +36,23 @@ namespace MapApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            
+            //if (grantResults[0] == Permission.Denied)
+            //{
+            //    Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings,
+            //        Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
+            //    intent.AddFlags(ActivityFlags.NewTask);
+            //    intent.AddFlags(ActivityFlags.MultipleTask);
+            //    Android.App.Application.Context.StartActivity(intent);
+            //}
+
+
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }

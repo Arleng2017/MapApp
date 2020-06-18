@@ -10,7 +10,7 @@
         <StackLayout>
             <maps:Map x:Name="MyMap"
                   HasZoomEnabled="True"
-                  Margin="0,0,0,-100">
+                  Margin="0,0,0,0">
                 <x:Arguments>
                     <maps:MapSpan>
                         <x:Arguments>
