@@ -24,8 +24,6 @@
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>MapApp</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.companyname.MapApp</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -40,5 +38,22 @@
 	<string>Can we use your location</string>
 	<key>Location When In Use Usage Description</key>
 	<string>We are using you location</string>
+	<key>CFBundleIdentifier</key>
+	<string>thes.dev.maps</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>MKDirectionsRequest</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.maps.directionsrequest</string>
+			</array>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>
