@@ -9,5 +9,6 @@ namespace MapApp
         bool IsGpsEnabled();
         bool IsNetworkEnabled();
         bool IsLocationEnabled();
+        void OpenApplicationInfoSetting();
     }
 }

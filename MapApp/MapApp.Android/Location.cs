@@ -53,5 +53,13 @@ namespace MapApp.Droid
         {
             return IsGpsEnabled() || IsNetworkEnabled();
         }
+
+        public void OpenApplicationInfoSetting()
+        {
+            Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
+            intent.AddFlags(ActivityFlags.NewTask);
+            intent.AddFlags(ActivityFlags.MultipleTask);
+            Android.App.Application.Context.StartActivity(intent);
+        }
     }
 }

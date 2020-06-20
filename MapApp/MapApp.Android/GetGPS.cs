@@ -5,6 +5,9 @@ using System.Text;
 using Android;
 using Android.App;
 using Android.Content;
+using Android.Gms.Common.Apis;
+using Android.Gms.Location;
+using Android.Gms.Tasks;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
@@ -19,12 +22,16 @@ namespace MapApp.Droid
     public class GetGPS : IGetGPS
     {
         LocationManager LM = (LocationManager)Android.App.Application.Context.GetSystemService(Context.LocationService);
+
         void IGetGPS.GetGPS()
         {
-            Intent intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
-            intent.AddFlags(ActivityFlags.NewTask);
-            intent.AddFlags(ActivityFlags.MultipleTask);
-            Android.App.Application.Context.StartActivity(intent);
+            //mainActivity.DisplayLocationSettingsRequest();
+
+            //mainActivity.DisplayLocationSettingsRequest();
+            //Intent intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+            //intent.AddFlags(ActivityFlags.NewTask);
+            //intent.AddFlags(ActivityFlags.MultipleTask);
+            //Android.App.Application.Context.StartActivity(intent);
         }
 
 
@@ -37,6 +44,7 @@ namespace MapApp.Droid
             intent.AddFlags(ActivityFlags.MultipleTask);
             Android.App.Application.Context.StartActivity(intent);
         }
+        
     }
 
 }

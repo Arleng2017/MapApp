@@ -30,5 +30,10 @@ namespace MapApp.iOS
         {
             return CLLocationManager.LocationServicesEnabled;
         }
+
+        public void OpenApplicationInfoSetting()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

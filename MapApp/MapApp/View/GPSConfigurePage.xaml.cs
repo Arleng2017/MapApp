@@ -7,7 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
+
+
+
 
 namespace MapApp.View
 {
@@ -22,7 +26,7 @@ namespace MapApp.View
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
+            var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
             var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
                 await Navigation.PushAsync(new MapPage());
@@ -44,13 +48,13 @@ namespace MapApp.View
                 }
                 if (isGPSAppEnabled == PermissionStatus.Denied && isGPSDeviceEnabled)
                 {
-                    DependencyService.Get<IGetGPS>().OpenApplicationSetting();
+                    DependencyService.Get<ILocation>().OpenApplicationInfoSetting();
                 }
 
-                if (isGPSAppEnabled == PermissionStatus.Denied && !isGPSDeviceEnabled)
-                {
-                    DependencyService.Get<IGetGPS>().GetGPS();
-                }
+                //if (isGPSAppEnabled == PermissionStatus.Denied && !isGPSDeviceEnabled)
+                //{
+                //    DependencyService.Get<IGetGPS>().GetGPS();
+                //}
             }
             else
             {
@@ -67,6 +71,9 @@ namespace MapApp.View
             }
         }
 
+
+
+      
 
     }
 }
