@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Permissions;
+using Xamarin.Forms.Internals;
 
 namespace MapApp.View
 {
@@ -22,9 +24,11 @@ namespace MapApp.View
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
+            await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            var isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+            var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+            if (gspPermissionAppStatus == PermissionStatus.Granted && isGpsDeviceEnabled)
                 await Navigation.PushAsync(new MapPage());
             else
                 gpsText.Text = "GPS ถูกปิดอยู่";
@@ -32,41 +36,33 @@ namespace MapApp.View
 
         async void OpenSetting(Object sender, EventArgs e)
         {
-            await Permissions.RequestAsync<Permissions.LocationAlways>();
-            var isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            if (isGPSAppEnabled != PermissionStatus.Granted)
+            try
             {
-                isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-                if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
+                var ans = await DisplayAlert("บริการหาตำแหน่งที่ตั้งยังไม่ได้เปิดใช้งานในขณะนี้", "ไปที่ การตั้งค่า > ความเป็นส่วนตัว > เปิดใช้งาน บริการหาตำแหน่งที่ตั้ง", "การตั้งค่า", "ย้อนกลับ");
+                if (ans)
                 {
-                    await Navigation.PushAsync(new MapPage());
-                }
-                if (isGPSAppEnabled == PermissionStatus.Denied && isGPSDeviceEnabled)
-                {
-                    DependencyService.Get<IGetGPS>().OpenApplicationSetting();
-                }
+                    bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
+                    bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+                    var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
 
-                if (isGPSAppEnabled == PermissionStatus.Denied && !isGPSDeviceEnabled)
-                {
-                    DependencyService.Get<IGetGPS>().GetGPS();
-                }
-            }
-            else
-            {
-                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-                isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                if (!isGPSDeviceEnabled  || isGPSAppEnabled != PermissionStatus.Granted)
-                {
-                    if (!isGPSDeviceEnabled)
+                    if (isShowGPSPermissionDialog)
                     {
-                        DependencyService.Get<IGetGPS>().GetGPS();
+                        await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    }
+                    else
+                    {
+                        if (gspPermissionAppStatus != PermissionStatus.Granted || !isGpsDeviceEnabled)
+                        {
+                            CrossPermissions.Current.OpenAppSettings();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
-
 
     }
 }

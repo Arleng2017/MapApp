@@ -4,8 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="MapApp.MainPage"
-             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+             x:Class="MapApp.MainPage">
 
     <ContentPage.Content>
         <StackLayout>
@@ -13,6 +12,7 @@
             <Button Text="Map"
                 BackgroundColor="Red"
                 TextColor="White"
+                CornerRadius="0"
                 Clicked="OpenMap_clicked"/>
 
         </StackLayout>
