@@ -1,4 +1,5 @@
 ﻿using Plugin.Geolocator;
+using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,31 @@ namespace MapApp.View
         public GPSConfigurePage()
         {
             InitializeComponent();
+            CallApplicationPermission();
+        }
+
+        async void CallApplicationPermission() 
+        {
+            var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+            var isGrantGPS = isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled;
+
+            if (!isGrantGPS) { 
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+                isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
+                    await Navigation.PushAsync(new MapPage());
+                else
+                    gpsText.Text = "GPS ถูกปิดอยู่";
+            }
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            //await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
             var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
@@ -36,44 +57,27 @@ namespace MapApp.View
 
         async void OpenSetting(Object sender, EventArgs e)
         {
-            await Permissions.RequestAsync<Permissions.LocationAlways>();
-            var isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            if (isGPSAppEnabled != PermissionStatus.Granted)
+            try 
             {
-                isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-                if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
-                {
-                    await Navigation.PushAsync(new MapPage());
-                }
-                if (isGPSAppEnabled == PermissionStatus.Denied && isGPSDeviceEnabled)
-                {
-                    DependencyService.Get<ILocation>().OpenApplicationInfoSetting();
-                }
+                DependencyService.Get<IActivityService>().DisplayLocationSettingsRequest();
+                bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
+                bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+                var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
 
-                //if (isGPSAppEnabled == PermissionStatus.Denied && !isGPSDeviceEnabled)
-                //{
-                //    DependencyService.Get<IGetGPS>().GetGPS();
-                //}
-            }
-            else
-            {
-                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                isGPSDeviceEnabled = DependencyService.Get<IGetGPS>().CheckStatus();
-                isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                if (!isGPSDeviceEnabled  || isGPSAppEnabled != PermissionStatus.Granted)
+                if (isGpsDeviceEnabled)
                 {
-                    if (!isGPSDeviceEnabled)
+                    if (isShowGPSPermissionDialog) await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    else
                     {
-                        DependencyService.Get<IGetGPS>().GetGPS();
+                        if (gspPermissionAppStatus != PermissionStatus.Granted) DependencyService.Get<IActivityService>().OpenApplicationInfoSetting();
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
-
-
-
-      
 
     }
 }

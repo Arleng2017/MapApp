@@ -10,5 +10,7 @@ namespace MapApp
         bool IsNetworkEnabled();
         bool IsLocationEnabled();
         void OpenApplicationInfoSetting();
+
+       
     }
 }

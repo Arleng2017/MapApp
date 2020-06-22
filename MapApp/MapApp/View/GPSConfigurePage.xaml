@@ -9,13 +9,15 @@
         <StackLayout>
             <Label x:Name="gpsText"                  
                    FontSize="50"
+                   TextColor="Gray"
                    VerticalOptions="CenterAndExpand" 
                    HorizontalOptions="CenterAndExpand" />
 
-            <Button Text="เปิด GPS" 
+            <Button Text="อนุญาติการเข้าถึงตำแหน่ง" 
                     TextColor="white"
+                    CornerRadius="0"
                     BackgroundColor="Red" 
-                    Clicked="OpenSetting" />
+                    Clicked="OpenSetting"/>
 
         </StackLayout>
     </ContentPage.Content>
