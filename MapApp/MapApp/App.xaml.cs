@@ -1,4 +1,6 @@
 ﻿using System;
+using MapApp.View;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,8 +24,18 @@ namespace MapApp
         {
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
+            var mainPage = MainPage as NavigationPage;
+            if (mainPage.CurrentPage is GPSConfigurePage)
+            {
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                var isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+                var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+                if (gspPermissionAppStatus == PermissionStatus.Granted && isGpsDeviceEnabled)
+                    await MainPage.Navigation.PushAsync(new MapPage());
+            }
         }
     }
 }

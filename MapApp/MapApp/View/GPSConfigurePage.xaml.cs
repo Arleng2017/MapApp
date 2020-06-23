@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Permissions;
 using Xamarin.Forms.Internals;
+using System.Runtime.CompilerServices;
 
 namespace MapApp.View
 {
@@ -33,6 +34,7 @@ namespace MapApp.View
             else
                 gpsText.Text = "GPS ถูกปิดอยู่";
         }
+
 
         async void OpenSetting(Object sender, EventArgs e)
         {
