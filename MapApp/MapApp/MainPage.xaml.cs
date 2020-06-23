@@ -22,8 +22,7 @@ namespace MapApp
             InitializeComponent();
         }
 
-        public async void OpenMap_clicked(object sender, EventArgs e) 
-            => await Navigation.PushAsync(new GPSConfigurePage());
+        public async void OpenMap_clicked(object sender, EventArgs e) => await Navigation.PushAsync(new GPSConfigurePage());
 
     }
 }

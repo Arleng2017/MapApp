@@ -22,33 +22,10 @@ namespace MapApp.Droid
         public const int REQUEST_CHECK_SETTINGS = 0x1;
 
         private readonly object formsApp;
+
         public ActivityService(object formsApp)
         {
             this.formsApp = formsApp;
-        }
-
-        public async void DisplayApplictionSettingsRequest()
-        {
-            bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
-            bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-            var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-            if (isGpsDeviceEnabled)
-            {
-                if (isShowGPSPermissionDialog)
-                {
-                    await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                }
-                else
-                {
-                    if (gspPermissionAppStatus != PermissionStatus.Granted) {
-                        Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
-                        intent.AddFlags(ActivityFlags.NewTask);
-                        intent.AddFlags(ActivityFlags.MultipleTask);
-                        Android.App.Application.Context.StartActivity(intent);
-                    }
-                }
-            }
         }
 
         public void DisplayLocationSettingsRequest()

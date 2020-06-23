@@ -21,16 +21,6 @@ namespace MapApp.iOS
             return CLLocationManager.LocationServicesEnabled;
         }
 
-        public bool IsLocationEnabled()
-        {
-            return CLLocationManager.LocationServicesEnabled;
-        }
-
-        public bool IsNetworkEnabled()
-        {
-            return CLLocationManager.LocationServicesEnabled;
-        }
-
         public void OpenApplicationInfoSetting()
         {
             throw new NotImplementedException();

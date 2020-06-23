@@ -8,7 +8,6 @@ namespace MapApp
     {
         void DisplayLocationSettingsRequest();
 
-        void DisplayApplictionSettingsRequest();
         void OpenApplicationInfoSetting();
     }
 }

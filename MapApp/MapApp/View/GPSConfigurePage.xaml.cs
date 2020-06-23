@@ -25,6 +25,9 @@ namespace MapApp.View
             CallApplicationPermission();
         }
 
+        /// <summary>
+        /// เข้ามาครั้งแรก เพื่อถาม Permission
+        /// </summary>
         async void CallApplicationPermission() 
         {
             var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
@@ -46,7 +49,6 @@ namespace MapApp.View
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            //await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
             var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
@@ -55,6 +57,11 @@ namespace MapApp.View
                 gpsText.Text = "GPS ถูกปิดอยู่";
         }
 
+        /// <summary>
+        /// กดปุ่มสีแดง ที่หน้า UI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async void OpenSetting(Object sender, EventArgs e)
         {
             try 

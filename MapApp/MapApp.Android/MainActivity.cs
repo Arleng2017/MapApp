@@ -56,6 +56,9 @@ namespace MapApp.Droid
             base.OnResume();
         }
 
+        /// <summary>
+        /// ทำงานหลัง Google API แสดงเสร็จ
+        /// </summary>
         protected override void OnActivityResult(int requestCode, Android.App.Result resultCode, Intent data)
         {
             switch (requestCode)
@@ -80,6 +83,9 @@ namespace MapApp.Droid
             }
         }
 
+        /// <summary>
+        /// จะทำงานเมื่อ USER ตอบตกลง
+        /// </summary>
         async void OpenApplicationSetting() {
             bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
             bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();

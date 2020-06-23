@@ -20,8 +20,8 @@ namespace MapApp.Droid
 {
     public class Location : ILocation
     {
-        public const int REQUEST_CHECK_SETTINGS = 0x1;
         LocationManager LocationManager { get; set; }
+
         public Location()
         {
             LocationManager = (LocationManager)(Forms.Context.GetSystemService(Context.LocationService));
@@ -37,31 +37,6 @@ namespace MapApp.Droid
             {
                 return false;
             }
-        }
-
-        public bool IsLocationEnabled()
-        {
-            try
-            {
-                return LocationManager.IsProviderEnabled(LocationManager.NetworkProvider);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public bool IsNetworkEnabled()
-        {
-            return IsGpsEnabled() || IsNetworkEnabled();
-        }
-
-        public void OpenApplicationInfoSetting()
-        {
-            Intent intent = new Intent(Android.Provider.Settings.ActionApplicationDetailsSettings, Android.Net.Uri.Parse("package:" + Android.App.Application.Context.PackageName));
-            intent.AddFlags(ActivityFlags.NewTask);
-            intent.AddFlags(ActivityFlags.MultipleTask);
-            Android.App.Application.Context.StartActivity(intent);
         }
 
     }
