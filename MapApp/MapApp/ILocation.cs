@@ -7,8 +7,5 @@ namespace MapApp
     public interface ILocation
     {
         bool IsGpsEnabled();
-        //void OpenApplicationInfoSetting();
-
-       
     }
 }

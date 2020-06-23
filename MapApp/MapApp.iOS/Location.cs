@@ -12,10 +12,6 @@ namespace MapApp.iOS
 {
     public class Location : ILocation
     {
-        public Location()
-        {
-        }
-
         public bool IsGpsEnabled()
         {
             return CLLocationManager.LocationServicesEnabled;
