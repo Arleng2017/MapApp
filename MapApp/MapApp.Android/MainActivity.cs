@@ -87,19 +87,12 @@ namespace MapApp.Droid
         /// จะทำงานเมื่อ USER ตอบตกลง
         /// </summary>
         async void OpenApplicationSetting() {
-            bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
-            bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-            var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-            if (isGpsDeviceEnabled)
+            var locationService = DependencyService.Get<ILocation>();
+            var shouldRequestPermission = await locationService.ShouldRequestPermission();
+            if (shouldRequestPermission)
             {
-                if (isShowGPSPermissionDialog) await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                else
-                {
-                    if (gspPermissionAppStatus != PermissionStatus.Granted) DependencyService.Get<IActivityService>().OpenApplicationInfoSetting();
-                }
+                await locationService.EnableLocation();
             }
         }
-
     }
 }

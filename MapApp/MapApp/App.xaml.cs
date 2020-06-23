@@ -29,12 +29,11 @@ namespace MapApp
             var mainPage = MainPage as NavigationPage;
             if (mainPage.CurrentPage is GPSConfigurePage)
             {
-                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                var isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-                var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-                if (gspPermissionAppStatus == PermissionStatus.Granted && isGpsDeviceEnabled)
+                var permissionStatus = await DependencyService.Get<ILocation>().CheckPermission();
+                if (permissionStatus)
+                {
                     await MainPage.Navigation.PushAsync(new MapPage());
+                }
             }
         }
     }

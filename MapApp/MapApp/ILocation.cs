@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MapApp
 {
     public interface ILocation
     {
-        bool IsGpsEnabled();
+        Task<bool> CheckPermission();
+        Task<bool> ShouldRequestPermission();
+        Task EnableLocation();
     }
 }

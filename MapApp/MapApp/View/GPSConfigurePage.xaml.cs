@@ -22,39 +22,33 @@ namespace MapApp.View
         public GPSConfigurePage()
         {
             InitializeComponent();
-            CallApplicationPermission();
+            CheckLocationService();
         }
 
         /// <summary>
         /// เข้ามาครั้งแรก เพื่อถาม Permission
         /// </summary>
-        async void CallApplicationPermission() 
+        async void CheckLocationService() 
         {
-            var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-            var isGrantGPS = isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled;
-
-            if (!isGrantGPS) { 
-                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-                isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
-                    await Navigation.PushAsync(new MapPage());
-                else
-                    gpsText.Text = "GPS ถูกปิดอยู่";
+            var permissionStatus = await DependencyService.Get<ILocation>().CheckPermission();
+            if (permissionStatus)
+            {
+                await Navigation.PushAsync(new MapPage());
+            }
+            else
+            {
+                gpsText.Text = "GPS ถูกปิดอยู่";
             }
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled)
-                await Navigation.PushAsync(new MapPage());
-            else
-                gpsText.Text = "GPS ถูกปิดอยู่";
+            //var isGPSDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
+            //var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+            //if (isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled) await Navigation.PushAsync(new MapPage());
+            //else gpsText.Text = "GPS ถูกปิดอยู่";
         }
 
         /// <summary>
@@ -62,29 +56,11 @@ namespace MapApp.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void OpenSetting(Object sender, EventArgs e)
+        async void EnableLocation(Object sender, EventArgs e)
         {
-            try 
-            {
-                DependencyService.Get<IActivityService>().DisplayLocationSettingsRequest();
-                bool isShowGPSPermissionDialog = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
-                bool isGpsDeviceEnabled = DependencyService.Get<ILocation>().IsGpsEnabled();
-                var gspPermissionAppStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
-                if (isGpsDeviceEnabled)
-                {
-                    if (isShowGPSPermissionDialog) await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                    else
-                    {
-                        if (gspPermissionAppStatus != PermissionStatus.Granted) DependencyService.Get<IActivityService>().OpenApplicationInfoSetting();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            var locationService = DependencyService.Get<ILocation>();
+            var shouldRequestPermission = await locationService.ShouldRequestPermission();
+            await locationService.EnableLocation();
         }
-
     }
 }

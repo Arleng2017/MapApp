@@ -82,6 +82,5 @@ namespace MapApp.Droid
             intent.AddFlags(ActivityFlags.MultipleTask);
             Android.App.Application.Context.StartActivity(intent);
         }
-
-}
+    }
 }

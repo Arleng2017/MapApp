@@ -17,7 +17,7 @@
                     TextColor="white"
                     CornerRadius="0"
                     BackgroundColor="Red" 
-                    Clicked="OpenSetting"/>
+                    Clicked="EnableLocation"/>
 
         </StackLayout>
     </ContentPage.Content>
