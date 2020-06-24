@@ -59,8 +59,9 @@ namespace MapApp.View
         async void EnableLocation(Object sender, EventArgs e)
         {
             var locationService = DependencyService.Get<ILocation>();
-            var shouldRequestPermission = await locationService.ShouldRequestPermission();
             await locationService.EnableLocation();
+
+            CheckLocationService();
         }
     }
 }

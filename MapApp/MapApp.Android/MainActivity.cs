@@ -88,11 +88,7 @@ namespace MapApp.Droid
         /// </summary>
         async void OpenApplicationSetting() {
             var locationService = DependencyService.Get<ILocation>();
-            var shouldRequestPermission = await locationService.ShouldRequestPermission();
-            if (shouldRequestPermission)
-            {
-                await locationService.EnableLocation();
-            }
+            await locationService.NavigateToMapPage();
         }
     }
 }

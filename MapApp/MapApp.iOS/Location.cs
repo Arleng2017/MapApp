@@ -15,15 +15,18 @@ namespace MapApp.iOS
 {
     public class Location : LocationBase, ILocation
     {
-        public async Task<bool> ShouldRequestPermission()
-        {
-            var accept = await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("บริการหาตำแหน่งที่ตั้งยังไม่ได้เปิดใช้งานในขณะนี้", "ไปที่ การตั้งค่า > ความเป็นส่วนตัว > เปิดใช้งาน บริการหาตำแหน่งที่ตั้ง", "การตั้งค่า", "ย้อนกลับ");
-            return accept;
-        }
-
         protected override bool LocationServiceEnabled()
         {
             return CLLocationManager.LocationServicesEnabled;
+        }
+
+        protected override async Task EnableDeviceLocationService()
+        {
+            var shouldOpenAppSetting = await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("บริการหาตำแหน่งที่ตั้งยังไม่ได้เปิดใช้งานในขณะนี้", "ไปที่ การตั้งค่า > ความเป็นส่วนตัว > เปิดใช้งาน บริการหาตำแหน่งที่ตั้ง", "การตั้งค่า", "ย้อนกลับ");
+            if (shouldOpenAppSetting)
+            {
+                CrossPermissions.Current.OpenAppSettings();
+            }
         }
     }
 } 

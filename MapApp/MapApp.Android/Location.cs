@@ -29,12 +29,6 @@ namespace MapApp.Droid
             locationManager = (LocationManager)(Forms.Context.GetSystemService(Context.LocationService));
         }
 
-        public Task<bool> ShouldRequestPermission()
-        {
-            DependencyService.Get<IActivityService>().DisplayLocationSettingsRequest();
-            return Task.FromResult(true);
-        }
-
         protected override bool LocationServiceEnabled()
         {
             try
@@ -45,6 +39,11 @@ namespace MapApp.Droid
             {
                 return false;
             }
+        }
+
+        protected override async Task EnableDeviceLocationService()
+        {
+            DependencyService.Get<IActivityService>().DisplayLocationSettingsRequest();
         }
     }
 }

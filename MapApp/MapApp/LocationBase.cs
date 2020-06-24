@@ -11,20 +11,22 @@ namespace MapApp
     public abstract class LocationBase
     {
         protected abstract bool LocationServiceEnabled();
+        protected abstract Task EnableDeviceLocationService();
+
+
         public async Task<bool> CheckPermission()
         {
-            await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            var isGPSDeviceEnabled = LocationServiceEnabled();
-            var isGPSAppEnabled = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            var deviceLocationServiceEnabled = LocationServiceEnabled();
+            var locationPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            var locationPermissionGranted = locationPermissionStatus == PermissionStatus.Granted;
 
-            return isGPSAppEnabled == PermissionStatus.Granted && isGPSDeviceEnabled;
+            return locationPermissionGranted && deviceLocationServiceEnabled;
         }
 
         public async Task EnableLocation()
         {
             try
             {
-                var deviceLocationServiceEnabled = LocationServiceEnabled();
                 var shouldRequestPermission = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
                 var locationPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
                 var appLocationPermissionDenied = locationPermissionStatus == PermissionStatus.Denied;
@@ -35,20 +37,32 @@ namespace MapApp
                 }
                 else
                 {
-                    if (!deviceLocationServiceEnabled || appLocationPermissionDenied)
+                    if (appLocationPermissionDenied)
                     {
                         CrossPermissions.Current.OpenAppSettings();
                     }
                 }
 
-                var granted = deviceLocationServiceEnabled && locationPermissionStatus == PermissionStatus.Granted;
-                if (granted)
+                var deviceLocationServiceEnabled = LocationServiceEnabled();
+                if (!deviceLocationServiceEnabled)
                 {
-                    await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new MapPage());
+                    await EnableDeviceLocationService();
                 }
             }
             catch (Exception ex)
             {
+            }
+        }
+
+        public async Task NavigateToMapPage()
+        {
+            var deviceLocationServiceEnabled = LocationServiceEnabled();
+            var locationPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            var locationPermissionGranted = locationPermissionStatus == PermissionStatus.Granted;
+
+            if (locationPermissionGranted && deviceLocationServiceEnabled)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new MapPage());
             }
         }
     }

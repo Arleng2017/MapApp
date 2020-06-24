@@ -8,7 +8,7 @@ namespace MapApp
     public interface ILocation
     {
         Task<bool> CheckPermission();
-        Task<bool> ShouldRequestPermission();
         Task EnableLocation();
+        Task NavigateToMapPage();
     }
 }
