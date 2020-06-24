@@ -29,7 +29,7 @@ namespace MapApp
             {
                 var shouldRequestPermission = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
                 var locationPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-                var appLocationPermissionDenied = locationPermissionStatus == PermissionStatus.Denied;
+                var appLocationPermissionDenied = locationPermissionStatus != PermissionStatus.Granted;
 
                 if (shouldRequestPermission)
                 {
