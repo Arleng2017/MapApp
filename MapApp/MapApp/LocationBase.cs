@@ -24,22 +24,20 @@ namespace MapApp
         {
             try
             {
-                bool deviceLocationServiceEnabled = LocationServiceEnabled();
-                bool shouldRequestPermission = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
+                var deviceLocationServiceEnabled = LocationServiceEnabled();
+                var shouldRequestPermission = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Plugin.Permissions.Abstractions.Permission.LocationWhenInUse);
                 var locationPermissionStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                var appLocationPermissionDenied = locationPermissionStatus == PermissionStatus.Denied;
 
-                if (deviceLocationServiceEnabled)
+                if (shouldRequestPermission)
                 {
-                    if (shouldRequestPermission)
+                    await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                }
+                else
+                {
+                    if (!deviceLocationServiceEnabled || appLocationPermissionDenied)
                     {
-                        await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                    }
-                    else
-                    {
-                        if (locationPermissionStatus != PermissionStatus.Granted)
-                        {
-                            CrossPermissions.Current.OpenAppSettings();
-                        }
+                        CrossPermissions.Current.OpenAppSettings();
                     }
                 }
 
