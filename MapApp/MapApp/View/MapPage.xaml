@@ -7,7 +7,7 @@
              x:Class="MapApp.View.MapPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
     <ContentPage.Content>
-        <StackLayout>
+        <Grid>
             <maps:Map x:Name="MyMap"
                   HasZoomEnabled="True"
                   Margin="0,0,0,0">
@@ -26,7 +26,7 @@
                     </maps:MapSpan>
                 </x:Arguments>
 
-                <maps:Map.Pins>
+                <!--<maps:Map.Pins>
                     <maps:Pin Label="Santa Cruz"
                        Address="The city with a boardwalk"
                        Type="Place">
@@ -39,8 +39,14 @@
                             </maps:Position>
                         </maps:Pin.Position>
                     </maps:Pin>
-                </maps:Map.Pins>
+                </maps:Map.Pins>-->
             </maps:Map>
-        </StackLayout>
+            <Image Source="https://i.ya-webdesign.com/images/gps-clipart-location-tag-6.png"
+               HeightRequest="60"
+               WidthRequest="120"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"/>
+          
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

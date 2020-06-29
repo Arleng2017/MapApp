@@ -18,25 +18,24 @@ namespace MapApp.View
         public MapPage()
         {
             InitializeComponent();
-            GetLocation();
-
+            //GetLocation();
         }
 
-        async void GetLocation()
-        {
-            try
-            {
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(100)));
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
-        }
+        //async void GetLocation()
+        //{
+        //    try
+        //    {
+        //        var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+        //        var location = await Geolocation.GetLocationAsync(request);
+        //        if (location != null)
+        //        {
+        //            MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(100)));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
+        //    }
+        //}
     }
 }
