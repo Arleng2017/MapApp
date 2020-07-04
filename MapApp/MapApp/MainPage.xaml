@@ -15,6 +15,13 @@
                 CornerRadius="0"
                 Clicked="OpenMap_clicked"/>
 
+             <Button Text="Play Game"
+                BackgroundColor="Red"
+                TextColor="White"
+                CornerRadius="0"
+                Clicked="PlayGame_clicked"/>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
