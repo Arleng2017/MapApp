@@ -8,9 +8,27 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
     <ContentPage.Content>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="340"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
             <maps:Map x:Name="MyMap"
-                  HasZoomEnabled="True"
-                  Margin="0,0,0,0">
+                Grid.ColumnSpan="2"
+                Grid.Row="0"
+                IsShowingUser="True"
+                HasZoomEnabled="True"
+                Margin="0,0,0,0">
                 <x:Arguments>
                     <maps:MapSpan>
                         <x:Arguments>
@@ -26,7 +44,7 @@
                     </maps:MapSpan>
                 </x:Arguments>
 
-                <!--<maps:Map.Pins>
+                <maps:Map.Pins>
                     <maps:Pin Label="Santa Cruz"
                        Address="The city with a boardwalk"
                        Type="Place">
@@ -39,14 +57,94 @@
                             </maps:Position>
                         </maps:Pin.Position>
                     </maps:Pin>
-                </maps:Map.Pins>-->
+                </maps:Map.Pins>
             </maps:Map>
             <Image Source="https://i.ya-webdesign.com/images/gps-clipart-location-tag-6.png"
-               HeightRequest="60"
-               WidthRequest="120"
+                   HeightRequest="60"
+                   WidthRequest="120"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Margin="0,-40,0,0"
                HorizontalOptions="CenterAndExpand"
                VerticalOptions="CenterAndExpand"/>
-          
+
+            <Label x:Name="latText"
+                   Text="Latitude:"
+                   Margin="0,0,10,0"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+            <Label x:Name="longText"
+                   Text="Longitude:"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+             <Label x:Name="accuracyText"
+                   Text="Horizontal Accuracy:"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+             <Label x:Name="verticalAccuracyText"
+                   Text="vertical Accuracy:"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+             <Label x:Name="altitudeText"
+                   Text="altitude:"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+            <Button Text="Lowest"
+                    Grid.Row="4"
+                    TextColor="White"
+                    Grid.Column="0"
+                    BackgroundColor="Red"
+                    Clicked="GetLowestGPS_clicked"/>
+
+            <Button Text="Low"
+                    Grid.Row="4"
+                    TextColor="White"
+                    Grid.Column="1"
+                    BackgroundColor="Red"
+                     Clicked="GetLowGPS_clicked"/>
+
+            <Button Text="Medium"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                     Clicked="GetMediumGPS_clicked"/>
+
+            <Button Text="High"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    Clicked="GetHighGPS_clicked"/>
+
+            <Button Text="Best"
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    Clicked="GetBestGPS_clicked"/>
+
+             <Button Text="Get Last Know"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    Clicked="GetLastKnow_clicked"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

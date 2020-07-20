@@ -8,13 +8,11 @@
 
     <ContentPage.Content>
         <StackLayout>
-
             <Button Text="Map"
                 BackgroundColor="Red"
                 TextColor="White"
                 CornerRadius="0"
                 Clicked="OpenMap_clicked"/>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
