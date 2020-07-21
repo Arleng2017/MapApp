@@ -31,7 +31,7 @@ namespace MapApp.View
                 {
                     MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
                     latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Latitude : {location.Longitude}";
+                    longText.Text = $"Longitude : {location.Longitude}";
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
@@ -170,7 +170,7 @@ namespace MapApp.View
                 {
                     MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
                     latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Latitude : {location.Longitude}";
+                    longText.Text = $"Longitude : {location.Longitude}";
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
