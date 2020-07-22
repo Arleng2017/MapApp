@@ -9,14 +9,14 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="340"/>
+                <RowDefinition Height="430"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -145,6 +145,14 @@
                     TextColor="White"
                     BackgroundColor="Red"
                     Clicked="GetLastKnow_clicked"/>
+
+            <Button Text="Just Delivery"
+                    x:Name="ShoppingBtn"
+                    Grid.Row="7"
+                    Grid.ColumnSpan="2"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    IsEnabled="True"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

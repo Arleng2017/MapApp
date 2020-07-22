@@ -35,6 +35,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -48,6 +49,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.Lowest);
                 var location = await Geolocation.GetLocationAsync(request);
                 if (location != null)
@@ -58,6 +60,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
 
                 }
             }
@@ -72,6 +75,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.Low);
                 var location = await Geolocation.GetLocationAsync(request);
                 if (location != null)
@@ -82,6 +86,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
 
                 }
             }
@@ -96,6 +101,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.Medium);
                 var location = await Geolocation.GetLocationAsync(request);
                 if (location != null)
@@ -106,6 +112,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -119,6 +126,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.High);
                 var location = await Geolocation.GetLocationAsync(request);
                 if (location != null)
@@ -129,6 +137,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -142,6 +151,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.Best);
                 var location = await Geolocation.GetLocationAsync(request);
                 if (location != null)
@@ -152,6 +162,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -165,6 +176,7 @@ namespace MapApp.View
             try
             {
                 Process();
+                ShoppingBtn.IsEnabled = false;
                 var location = await Geolocation.GetLastKnownLocationAsync();
                 if (location != null)
                 {
@@ -174,6 +186,7 @@ namespace MapApp.View
                     accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
                     verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
                     altitudeText.Text = $"Altitude {location.Altitude}";
+                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)

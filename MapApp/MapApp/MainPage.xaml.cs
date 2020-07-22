@@ -24,5 +24,6 @@ namespace MapApp
 
         public async void OpenMap_clicked(object sender, EventArgs e) => await Navigation.PushAsync(new MapPage());
 
+        public async void CurrentLocation_clicked(object sender, EventArgs e) => await Navigation.PushAsync(new CurrentLocationPage());
     }
 }

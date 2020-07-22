@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MapApp.View.CurrentLocationPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="715"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <maps:Map x:Name="MyMap"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="0"
+                    IsShowingUser="True"
+                    HasZoomEnabled="True"
+                    PropertyChanged="MapChanged"
+                    Margin="0,0,0,0">
+                </maps:Map>
+
+                <Image Source="https://i.ya-webdesign.com/images/gps-clipart-location-tag-6.png"
+                   HeightRequest="60"
+                   WidthRequest="120"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Margin="0,-40,0,0"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"/>
+
+                <Label x:Name="latText"
+                   Text="Latitude:"
+                   Margin="0,0,10,0"
+                   Grid.Row="1"
+                   FontSize="18"
+                   Grid.ColumnSpan="2"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="StartAndExpand"/>
+
+               
+
+                <Button Text="Just Delivery"
+                    x:Name="btn"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    IsEnabled="True"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

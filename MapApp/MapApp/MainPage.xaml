@@ -13,6 +13,12 @@
                 TextColor="White"
                 CornerRadius="0"
                 Clicked="OpenMap_clicked"/>
+            
+            <Button Text="Current Location"
+                BackgroundColor="Red"
+                TextColor="White"
+                CornerRadius="0"
+                Clicked="CurrentLocation_clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
