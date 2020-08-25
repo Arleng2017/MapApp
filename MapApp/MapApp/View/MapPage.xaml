@@ -9,13 +9,8 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="430"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition />
+                <RowDefinition Height="50" />
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -69,90 +64,30 @@
                VerticalOptions="CenterAndExpand"/>
 
             <Label x:Name="latText"
-                   Text="Latitude:"
+                   Text="Latitude: "
                    Margin="0,0,10,0"
                    Grid.Row="1"
                    Grid.Column="0"
                    HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"/>
+                   VerticalOptions="CenterAndExpand"/>
 
             <Label x:Name="longText"
-                   Text="Longitude:"
+                   Text="Longitude: "
                    Grid.Row="1"
                    Grid.Column="1"
                    HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"/>
-
-             <Label x:Name="accuracyText"
-                   Text="Horizontal Accuracy:"
-                   Grid.Row="2"
-                   Grid.Column="0"
-                   HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"/>
-
-             <Label x:Name="verticalAccuracyText"
-                   Text="vertical Accuracy:"
-                   Grid.Row="2"
-                   Grid.Column="1"
-                   HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"/>
-
-             <Label x:Name="altitudeText"
-                   Text="altitude:"
-                   Grid.Row="3"
-                   Grid.Column="0"
-                   HorizontalOptions="StartAndExpand"
-                   VerticalOptions="StartAndExpand"/>
-
-            <Button Text="Lowest"
-                    Grid.Row="4"
-                    TextColor="White"
-                    Grid.Column="0"
-                    BackgroundColor="Red"
-                    Clicked="GetLowestGPS_clicked"/>
-
-            <Button Text="Low"
-                    Grid.Row="4"
-                    TextColor="White"
-                    Grid.Column="1"
-                    BackgroundColor="Red"
-                     Clicked="GetLowGPS_clicked"/>
-
-            <Button Text="Medium"
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    TextColor="White"
-                    BackgroundColor="Red"
-                     Clicked="GetMediumGPS_clicked"/>
-
-            <Button Text="High"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    TextColor="White"
-                    BackgroundColor="Red"
-                    Clicked="GetHighGPS_clicked"/>
-
-            <Button Text="Best"
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    TextColor="White"
-                    BackgroundColor="Red"
-                    Clicked="GetBestGPS_clicked"/>
-
-             <Button Text="Get Last Know"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    TextColor="White"
-                    BackgroundColor="Red"
-                    Clicked="GetLastKnow_clicked"/>
+                   VerticalOptions="CenterAndExpand"/>
 
             <Button Text="Just Delivery"
                     x:Name="ShoppingBtn"
-                    Grid.Row="7"
+                    Grid.Row="2"
                     Grid.ColumnSpan="2"
                     TextColor="White"
                     BackgroundColor="Red"
+                    Clicked="GetLatLonPoint_clicked"
                     IsEnabled="True"/>
         </Grid>
+
     </ContentPage.Content>
+
 </ContentPage>

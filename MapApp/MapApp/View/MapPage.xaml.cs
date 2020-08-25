@@ -1,14 +1,13 @@
-﻿using Plugin.Geolocator;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.Maps;
 using Xamarin.Essentials;
+using System.Net.Http;
+using Newtonsoft.Json;
+using MapApp.View.Models;
 
 namespace MapApp.View
 {
@@ -29,13 +28,9 @@ namespace MapApp.View
                 var location = await Geolocation.GetLastKnownLocationAsync();
                 if (location != null)
                 {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
+                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Xamarin.Forms.Maps.Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
                     latText.Text = $"Latitude : {location.Latitude}";
                     longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -44,126 +39,25 @@ namespace MapApp.View
             }
         }
 
-        private async void GetLowestGPS_clicked(Object sender, EventArgs e)
+        private async void GetLatLonPoint_clicked(Object sender, EventArgs e)
         {
             try
             {
                 Process();
-                ShoppingBtn.IsEnabled = false;
-                var request = new GeolocationRequest(GeolocationAccuracy.Lowest);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
-        }
-
-        private async void GetLowGPS_clicked(Object sender, EventArgs e)
-        {
-            try
-            {
-                Process();
-                ShoppingBtn.IsEnabled = false;
-                var request = new GeolocationRequest(GeolocationAccuracy.Low);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
-        }
-
-        private async void GetMediumGPS_clicked(Object sender, EventArgs e)
-        {
-            try
-            {
-                Process();
-                ShoppingBtn.IsEnabled = false;
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
-        }
-
-        private async void GetHighGPS_clicked(Object sender, EventArgs e)
-        {
-            try
-            {
-                Process();
-                ShoppingBtn.IsEnabled = false;
-                var request = new GeolocationRequest(GeolocationAccuracy.High);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
-            }
-        }
-
-        private async void GetBestGPS_clicked(Object sender, EventArgs e)
-        {
-            try
-            {
-                Process();
-                ShoppingBtn.IsEnabled = false;
                 var request = new GeolocationRequest(GeolocationAccuracy.Best);
-                var location = await Geolocation.GetLocationAsync(request);
+                var location = await Geolocation.GetLocationAsync();
                 if (location != null)
                 {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
+                    var position = MyMap.VisibleRegion.Center;
+                    latText.Text = $"Latitude : {position.Latitude}";
+                    longText.Text = $"Longitude : {position.Longitude}";
+
+
+                    await Navigation.PushAsync(new SelectLocationPage(position.Latitude.ToString(), position.Longitude.ToString()));
                 }
+
+
+
             }
             catch (Exception ex)
             {
@@ -171,27 +65,32 @@ namespace MapApp.View
             }
         }
 
-        private async void GetLastKnow_clicked(Object sender, EventArgs e)
+        private async Task<DataRespone> GetAddress(double lat, double lon)
         {
             try
             {
-                Process();
-                ShoppingBtn.IsEnabled = false;
-                var location = await Geolocation.GetLastKnownLocationAsync();
-                if (location != null)
+                var urlSearchApi = "https://atlas.microsoft.com/search/fuzzy/json" + $"?subscription-key=9Pr3bh-0TB9ZCDmRcvS_UFJDu_Xm7sGs3Z5ASG1AJhI&api-version=1.0&query={lat},{lon}&language=th-TH&countrySet=TH&idxSet=POI,PAD&lat={lat}&lon={lon}&limit=5";
+                var httpClient = new HttpClient();
+                var resData = httpClient.GetAsync(urlSearchApi).GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var resultObj = JsonConvert.DeserializeObject<Root>(resData);
+                var lstReults = resultObj.results;
+                var selectResult = lstReults.Any(it => it.type == "POI") ? lstReults.Where(it => it.type == "POI").FirstOrDefault() : lstReults.Where(it => it.type == "Point Address").FirstOrDefault();
+                var result = new DataRespone()
                 {
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(.2)));
-                    latText.Text = $"Latitude : {location.Latitude}";
-                    longText.Text = $"Longitude : {location.Longitude}";
-                    accuracyText.Text = $"Horizontal Accuracy: {location.Accuracy} m.";
-                    verticalAccuracyText.Text = $"Vertical Accuracy: {location.VerticalAccuracy} m.";
-                    altitudeText.Text = $"Altitude {location.Altitude}";
-                    ShoppingBtn.IsEnabled = true;
-                }
+                    Name = selectResult.poi?.name ?? "",
+                    Phone = selectResult.poi?.phone ?? "",
+                    HouseNo = selectResult.address?.streetNumber ?? "",
+                    Road = selectResult.address?.streetName ?? "",
+                    Sub_District = selectResult.address?.municipalitySubdivision ?? "",
+                    District = selectResult.address?.countrySecondarySubdivision ?? "",
+                    Province = selectResult.address?.municipality ?? "",
+                    PostalCode = selectResult.address?.postalCode ?? "",
+                };
+                return result;
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Notification", "Unable to get GPS Location " + ex, "Ok");
+                return new DataRespone();
             }
         }
 
@@ -199,9 +98,6 @@ namespace MapApp.View
         {
             latText.Text = "Processing...";
             longText.Text = "Processing...";
-            accuracyText.Text = "Processing...";
-            altitudeText.Text = "Processing...";
-            verticalAccuracyText.Text = "Processing...";
         }
     }
 }

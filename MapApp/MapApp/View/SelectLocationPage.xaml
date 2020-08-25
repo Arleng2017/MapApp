@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MapApp.View.SelectLocationPage"
+             Title="สถานที่ใกล้เคียง">
+    <ListView x:Name="LocationView"
+            ItemsSource="{Binding DataRespone}" HasUnevenRows="true">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                
+                <ViewCell>
+                    <ViewCell.View>
+                        <StackLayout Spacing="5" Padding="10">
+                            <Label  Text="{Binding Name}" FontSize="16" />
+                            <Label  Text="{Binding Phone}"   />
+                            <Label  Text="{Binding Address}" />
+                        </StackLayout>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
