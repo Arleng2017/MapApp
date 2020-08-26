@@ -78,7 +78,7 @@
                    HorizontalOptions="StartAndExpand"
                    VerticalOptions="CenterAndExpand"/>
 
-            <Button Text="Just Delivery"
+            <Button Text="Get Locations"
                     x:Name="ShoppingBtn"
                     Grid.Row="2"
                     Grid.ColumnSpan="2"

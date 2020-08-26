@@ -5,12 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MapApp.View.SelectLocationPage"
-             Title="สถานที่ใกล้เคียง">
+             Title="พิกัดหมุดและสถานที่ใกล้เคียง">
     <ListView x:Name="LocationView"
             ItemsSource="{Binding DataRespone}" HasUnevenRows="true">
         <ListView.ItemTemplate>
             <DataTemplate>
-                
                 <ViewCell>
                     <ViewCell.View>
                         <StackLayout Spacing="5" Padding="10">

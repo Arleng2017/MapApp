@@ -18,8 +18,29 @@ namespace MapApp.View
         {
             InitializeComponent();
             LstLocations = new List<DataRespone>();
+            GetAddressCurrent(lat, lon);
             DisplayLocation(lat, lon);
             LocationView.ItemsSource = LstLocations;
+        }
+
+        async void GetAddressCurrent(string lat, string lon)
+        {
+            var urlSearchApi = "https://atlas.microsoft.com/search/address/reverse/json" + $"?api-version=1.0&subscription-key=9Pr3bh-0TB9ZCDmRcvS_UFJDu_Xm7sGs3Z5ASG1AJhI&language=th-TH&query={lat},{lon}";
+            var httpClient = new HttpClient();
+            var resData = httpClient.GetAsync(urlSearchApi).GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var resultObj = JsonConvert.DeserializeObject<Root2.Root>(resData);
+            var result = resultObj.addresses?.FirstOrDefault().address;
+            LstLocations.Add(new DataRespone()
+            {
+                Name = "พิกัดหมุด",
+                Phone = "",
+                HouseNo = result.streetNumber ?? "",
+                Road = result.streetName ?? "",
+                Sub_District = result.municipalitySubdivision ?? "",
+                District = result.countrySecondarySubdivision ?? "",
+                Province = result.municipality ?? "",
+                PostalCode = result.postalCode ?? "",
+            });
         }
 
         async void DisplayLocation(string lat, string lon)
